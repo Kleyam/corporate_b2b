@@ -57,7 +57,7 @@ Cada camada tem **uma única razão para mudar**:
 - **Services** só mudam se a regra de negócio mudar
 - **Prisma** só muda se o modelo de dados mudar
 
-Isso é o princípio **Single Responsibility** aplicado em nível arquitetural — um dos pilares do SOLID.
+Isso é o princípio **Single Responsibility** aplicado em nível arquitetural um dos pilares do SOLID.
 
 ---
 
@@ -66,7 +66,7 @@ Isso é o princípio **Single Responsibility** aplicado em nível arquitetural �
 | Tecnologia | Versão | Papel na arquitetura |
 |---|---|---|
 | **Node.js** | 22.x LTS | Runtime JavaScript server-side |
-| **TypeScript** | 5.9.x | Tipagem estática — contratos de código |
+| **TypeScript** | 5.9.x | Tipagem estática, contratos de código |
 | **Express** | 4.x | Framework HTTP minimalista |
 | **Prisma ORM** | 7.x | Abstração de banco com type-safety |
 | **PostgreSQL** | 16 (Alpine) | Banco relacional principal |
@@ -77,7 +77,7 @@ Isso é o princípio **Single Responsibility** aplicado em nível arquitetural �
 
 **`Decimal` ao invés de `Float` para `maxLimit`**
 
-Sistemas financeiros nunca usam ponto flutuante para valores monetários. `Float` usa representação binária que gera imprecisões (ex: `0.1 + 0.2 = 0.30000000000000004`). `Decimal(10,2)` garante precisão exata — obrigatório em qualquer contexto de cartões e transações.
+Sistemas financeiros nunca usam ponto flutuante para valores monetários. `Float` usa representação binária que gera imprecisões (ex: `0.1 + 0.2 = 0.30000000000000004`). `Decimal(10,2)` garante precisão exata obrigatório em qualquer contexto de cartões e transações.
 
 **`AppError` com `statusCode` customizado**
 
@@ -85,7 +85,7 @@ Em vez de lançar erros genéricos do Node, criamos uma classe que carrega o HTT
 
 **Enum `CardStatus` no banco**
 
-O status do cartão é um tipo enum gerenciado pelo próprio PostgreSQL — não uma string livre. Isso significa que o banco rejeita na camada de dados qualquer valor inválido, independente da aplicação.
+O status do cartão é um tipo enum gerenciado pelo próprio PostgreSQL não uma string livre. Isso significa que o banco rejeita na camada de dados qualquer valor inválido, independente da aplicação.
 
 ---
 
@@ -93,7 +93,7 @@ O status do cartão é um tipo enum gerenciado pelo próprio PostgreSQL — não
 
 ```typescript
 VirtualCard {
-  id:             String    // UUID v4 — identificador único
+  id:             String    // UUID v4 identificador único
   providerName:   String    // Nome do fornecedor vinculado ao cartão
   maxLimit:       Decimal   // Limite máximo (> 0, precisão financeira)
   expirationDate: DateTime  // Data de expiração (deve ser futura)
@@ -109,8 +109,8 @@ VirtualCard {
 
 - `maxLimit` deve ser **estritamente maior que zero**
 - `expirationDate` deve ser uma **data futura**
-- `cardNumber` é gerado no backend — nunca aceito como input externo
-- `cvv` é gerado no backend — nunca aceito como input externo
+- `cardNumber` é gerado no backend nunca aceito como input externo
+- `cvv` é gerado no backend nunca aceito como input externo
 - Status inicial sempre `ACTIVE`
 
 ---
