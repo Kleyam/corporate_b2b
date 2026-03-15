@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// O Enum mapeia diretamente para um tipo no PostgreSQL.
+// Pense nele como uma lista fechada de opções válidas para o status —
+// o banco REJEITA qualquer valor fora desses três.
+enum CardStatus {
+  ACTIVE
+  BLOCKED
+  REVOKED
+}
+
+model VirtualCard {
+  id             String     @id @default(uuid())
+  providerName   String
+  maxLimit       Decimal    @db.Decimal(10, 2)  // 10 dígitos no total, 2 após a vírgula
+  expirationDate DateTime
+  cardNumber     String     @unique             // Dois cartões não podem ter o mesmo número
+  cvv            String
+  status         CardStatus @default(ACTIVE)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt          // Prisma atualiza isso automaticamente
+
+  @@map("virtual_cards") // nome da tabela no banco (convenção: snake_case)
+}
